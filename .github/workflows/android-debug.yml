@@ -50,6 +50,9 @@ jobs:
       - name: Link Android API 37 platform directory
         run: ln -sfn android-37.0 "$ANDROID_SDK_ROOT/platforms/android-37"
 
+      - name: Link Android API 37 platform directory
+        run: ln -sfn android-37.0 "$ANDROID_SDK_ROOT/platforms/android-37"
+
       - name: Install mobile dependencies
         working-directory: apps/mobile
         run: npm ci --no-audit --no-fund
