@@ -50,12 +50,25 @@ jobs:
       - name: Link Android API 37 platform directory
         run: ln -sfn android-37.0 "$ANDROID_SDK_ROOT/platforms/android-37"
 
-      - name: Link Android API 37 platform directory
-        run: ln -sfn android-37.0 "$ANDROID_SDK_ROOT/platforms/android-37"
+
 
       - name: Install mobile dependencies
         working-directory: apps/mobile
         run: npm ci --no-audit --no-fund
+
+      - name: Generate Android debug keystore
+        run: |
+          mkdir -p apps/mobile/android/app
+          keytool -genkeypair -v \
+            -storetype JKS \
+            -keystore apps/mobile/android/app/debug.keystore \
+            -storepass android \
+            -alias androiddebugkey \
+            -keypass android \
+            -dname "CN=Android Debug,O=Android,C=US" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000
 
       - name: Build debug APK
         working-directory: apps/mobile/android
