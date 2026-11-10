@@ -1,0 +1,36 @@
+import {authApi} from './authApi';
+import {authStore} from '../store/authStore';
+
+function getSession(data) {
+  const accessToken = data?.accessToken || data?.access_token;
+  if (!accessToken) {
+    throw new Error('API response did not contain an access token.');
+  }
+  return {
+    accessToken,
+    user: data.user || data.profile || null,
+  };
+}
+
+export const authService = {
+  async login(email, password) {
+    const data = await authApi.login({email, password});
+    await authStore.getState().setSession(getSession(data));
+    return data;
+  },
+
+  async register(payload) {
+    const data = await authApi.register(payload);
+      await authStore.getState().setSession(getSession(data));
+    }
+    return data;
+  },
+
+  async requestPasswordReset(email) {
+    return authApi.requestPasswordReset(email);
+  },
+
+  async logout() {
+    await authStore.getState().logout();
+  },
+};

@@ -1,0 +1,23 @@
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Android local configuration and signing keys
+local.properties
+*.keystore
+*.jks
+
+# Temporary files
+.DS_Store
+*.tmp
